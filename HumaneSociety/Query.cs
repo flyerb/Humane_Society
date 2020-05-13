@@ -167,11 +167,14 @@ namespace HumaneSociety
         internal static void RunEmployeeQueries(Employee employee, string crudOperation)
         {
             throw new NotImplementedException();
+
+            //
         }
 
         // TODO: Animal CRUD Operations
         internal static void AddAnimal(Animal animal)
         {
+            
             throw new NotImplementedException();
         }
 
@@ -190,6 +193,8 @@ namespace HumaneSociety
             throw new NotImplementedException();
         }
         
+        //ME START*********************************************************************************************************************************************************************
+
         // TODO: Animal Multi-Trait Search
         internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
         {
@@ -199,24 +204,50 @@ namespace HumaneSociety
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
-            throw new NotImplementedException();
+            int categoryId = db.Categories.FirstOrDefault(x => x.Name == categoryName).CategoryId;
+            return categoryId;
+            //should I always just use FirstOrDefault instead of First?
         }
-        
+
         internal static Room GetRoom(int animalId)
         {
-            throw new NotImplementedException();
+            //find animal by id and assign a new room id
+            var animalsId = db.Animals.Where(x => x.AnimalId == animalId);
+
+            Room newRoom = new Room { RoomId = , RoomNumber = , AnimalId = animalsId};
+            db.Rooms.InsertOnSubmit(newRoom);
+            db.SubmitChanges();
+            return newRoom;
+            // how to choose next available for roomID and room Num???
         }
         
         internal static int GetDietPlanId(string dietPlanName)
         {
-            throw new NotImplementedException();
+            int dietPlanId = db.DietPlans.FirstOrDefault(x => x.Name == dietPlanName).DietPlanId;
+            return dietPlanId;
+          
         }
 
         // TODO: Adoption CRUD Operations
         internal static void Adopt(Animal animal, Client client)
         {
-            throw new NotImplementedException();
+            // add to adoptions database 
+            //ClinetID, animalID, approval Status, AdoptionFee, Payment collected
+
+            Adoption adopt = new Adoption();
+
+            adopt.ClientId = client.ClientId;
+            adopt.AnimalId = animal.AnimalId;
+            adopt.ApprovalStatus = "Pending";
+            adopt.AdoptionFee = 200;
+            adopt.PaymentCollected = false;
+
+            db.Adoptions.InsertOnSubmit(adopt); 
+            db.SubmitChanges();
+
         }
+
+        //ME END***************************************************************************************************************************************************************************
 
         internal static IQueryable<Adoption> GetPendingAdoptions()
         {
