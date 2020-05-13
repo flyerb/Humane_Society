@@ -211,10 +211,10 @@ namespace HumaneSociety
 
         internal static Room GetRoom(int animalId)
         {
-            //find animal by id and assign a new room id
+            find animal by id and assign a new room id
             var animalsId = db.Animals.Where(x => x.AnimalId == animalId);
 
-            Room newRoom = new Room { RoomId = , RoomNumber = , AnimalId = animalsId};
+            Room newRoom = new Room { RoomId = , RoomNumber = , AnimalId = animalsId };
             db.Rooms.InsertOnSubmit(newRoom);
             db.SubmitChanges();
             return newRoom;
@@ -225,7 +225,7 @@ namespace HumaneSociety
         {
             int dietPlanId = db.DietPlans.FirstOrDefault(x => x.Name == dietPlanName).DietPlanId;
             return dietPlanId;
-          
+
         }
 
         // TODO: Adoption CRUD Operations
@@ -239,10 +239,11 @@ namespace HumaneSociety
             adopt.ClientId = client.ClientId;
             adopt.AnimalId = animal.AnimalId;
             adopt.ApprovalStatus = "Pending";
+            //also needs changed on animal.
             adopt.AdoptionFee = 200;
             adopt.PaymentCollected = false;
 
-            db.Adoptions.InsertOnSubmit(adopt); 
+            db.Adoptions.InsertOnSubmit(adopt);
             db.SubmitChanges();
 
         }
