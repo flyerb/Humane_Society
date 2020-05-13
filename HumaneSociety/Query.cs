@@ -180,7 +180,10 @@ namespace HumaneSociety
                     db.SubmitChanges();
                     break;
                 case "read":
-                    db.Employees.SingleOrDefault(x => x.EmployeeNumber == employee.EmployeeNumber);
+                    var thisEmployee = db.Employees.SingleOrDefault(x => x.EmployeeNumber == employee.EmployeeNumber);
+                    Console.WriteLine($"Name: {thisEmployee.FirstName} {thisEmployee.LastName} | Employee number: {thisEmployee.EmployeeNumber} | Email: {thisEmployee.Email}");
+                    Console.WriteLine("Press Enter to continue");
+                    Console.ReadLine();
                     break;
                 case "delete":
                     var employeeToDelete = db.Employees.SingleOrDefault(x => x.EmployeeNumber == employee.EmployeeNumber && x.LastName == employee.LastName);
@@ -193,6 +196,8 @@ namespace HumaneSociety
                     employeeToCreate.LastName = employee.LastName;
                     employeeToCreate.EmployeeNumber = employee.EmployeeNumber;
                     employeeToCreate.Email = employee.Email;
+                    employeeToCreate.UserName = employee.UserName;
+                    employeeToCreate.Password = employee.Password;
                     db.Employees.InsertOnSubmit(employeeToCreate);
                     db.SubmitChanges();
                     break;
