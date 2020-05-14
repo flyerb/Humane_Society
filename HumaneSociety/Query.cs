@@ -248,7 +248,7 @@ namespace HumaneSociety
             //find animal by id and assign a new room id
             var animalsId = db.Animals.Where(x => x.AnimalId == animalId);
 
-            Room newRoom = new Room { RoomId = , RoomNumber = , AnimalId = animalsId };
+           // Room newRoom = new Room { RoomId = , RoomNumber = , AnimalId = animalsId };
             db.Rooms.InsertOnSubmit(newRoom);
             db.SubmitChanges();
             return newRoom;
