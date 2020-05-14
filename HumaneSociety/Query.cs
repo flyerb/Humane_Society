@@ -166,21 +166,55 @@ namespace HumaneSociety
         // TODO: Allow any of the CRUD operations to occur here
         internal static void RunEmployeeQueries(Employee employee, string crudOperation)
         {
-            throw new NotImplementedException();
-
-            //
+            switch (crudOperation)
+            {
+                case "update":
+                    var employeesToUpdate = db.Employees.Where(x => x.EmployeeNumber == employee.EmployeeNumber).ToList();
+                    foreach (var emp in employeesToUpdate)
+                    {
+                        emp.FirstName = employee.FirstName;
+                        emp.LastName = employee.LastName;
+                        emp.EmployeeNumber = employee.EmployeeNumber;
+                        emp.Email = employee.Email;
+                    }
+                    db.SubmitChanges();
+                    break;
+                case "read":
+                    var thisEmployee = db.Employees.SingleOrDefault(x => x.EmployeeNumber == employee.EmployeeNumber);
+                    Console.WriteLine($"Name: {thisEmployee.FirstName} {thisEmployee.LastName} | Employee number: {thisEmployee.EmployeeNumber} | Email: {thisEmployee.Email}");
+                    Console.WriteLine("Press Enter to continue");
+                    Console.ReadLine();
+                    break;
+                case "delete":
+                    var employeeToDelete = db.Employees.SingleOrDefault(x => x.EmployeeNumber == employee.EmployeeNumber && x.LastName == employee.LastName);
+                    db.Employees.DeleteOnSubmit(employeeToDelete);
+                    db.SubmitChanges();
+                    break;
+                case "create":
+                    Employee employeeToCreate = new Employee();
+                    employeeToCreate.FirstName = employee.FirstName;
+                    employeeToCreate.LastName = employee.LastName;
+                    employeeToCreate.EmployeeNumber = employee.EmployeeNumber;
+                    employeeToCreate.Email = employee.Email;
+                    employeeToCreate.UserName = employee.UserName;
+                    employeeToCreate.Password = employee.Password;
+                    db.Employees.InsertOnSubmit(employeeToCreate);
+                    db.SubmitChanges();
+                    break;
+            }
         }
 
         // TODO: Animal CRUD Operations
         internal static void AddAnimal(Animal animal)
         {
-            
-            throw new NotImplementedException();
+            db.Animals.InsertOnSubmit(animal);
+            db.SubmitChanges();
         }
 
         internal static Animal GetAnimalByID(int id)
         {
-            throw new NotImplementedException();
+            var thisAnimal = db.Animals.SingleOrDefault(x => x.AnimalId == id);
+            return thisAnimal;
         }
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
@@ -211,7 +245,7 @@ namespace HumaneSociety
 
         internal static Room GetRoom(int animalId)
         {
-            find animal by id and assign a new room id
+            //find animal by id and assign a new room id
             var animalsId = db.Animals.Where(x => x.AnimalId == animalId);
 
             Room newRoom = new Room { RoomId = , RoomNumber = , AnimalId = animalsId };
