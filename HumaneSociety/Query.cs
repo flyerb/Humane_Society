@@ -227,32 +227,48 @@ namespace HumaneSociety
             throw new NotImplementedException();
         }
         
-        //ME START*********************************************************************************************************************************************************************
+        //Arya START*************************************
 
         // TODO: Animal Multi-Trait Search
-        internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
+        internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates, Animal animal) // parameter(s)?
         {
+            //for (updates[key] in updates[updates.Keys.ElementAt(an index)])
+            //{
+            //    switch (key)
+            //   {
+            //        case "1" :
+            //            //search for animal that matches the key
+            //            //return that animal
+            //            break;
+            //   }
             throw new NotImplementedException();
+
         }
-         
-        // TODO: Misc Animal Things
-        internal static int GetCategoryId(string categoryName)
+
+            // TODO: Misc Animal Things
+            internal static int GetCategoryId(string categoryName)
         {
             int categoryId = db.Categories.FirstOrDefault(x => x.Name == categoryName).CategoryId;
             return categoryId;
+
             //should I always just use FirstOrDefault instead of First?
         }
 
         internal static Room GetRoom(int animalId)
         {
             //find animal by id and assign a new room id
-            var animalsId = db.Animals.Where(x => x.AnimalId == animalId);
+          
+            Room newRoom = new Room();
+            //var newNum = db.Rooms.Count(r => r.RoomNumber++);
 
-           // Room newRoom = new Room { RoomId = , RoomNumber = , AnimalId = animalsId };
+            newRoom.AnimalId = animalId;
+            //newRoom.RoomNumber = newNum;
+            
+
             db.Rooms.InsertOnSubmit(newRoom);
             db.SubmitChanges();
             return newRoom;
-            // how to choose next available for roomID and room Num???
+            // Room ID is automatically generated, right?
         }
         
         internal static int GetDietPlanId(string dietPlanName)
@@ -266,7 +282,8 @@ namespace HumaneSociety
         internal static void Adopt(Animal animal, Client client)
         {
             // add to adoptions database 
-            //ClinetID, animalID, approval Status, AdoptionFee, Payment collected
+
+            //var adoptionStatus = db.Animals.FirstOrDefault(a => a.AdoptionStatus = "pending");
 
             Adoption adopt = new Adoption();
 
@@ -282,7 +299,7 @@ namespace HumaneSociety
 
         }
 
-        //ME END***************************************************************************************************************************************************************************
+        //Arya END****************************************************************************
 
         internal static IQueryable<Adoption> GetPendingAdoptions()
         {
